@@ -634,7 +634,8 @@ function show_tech_gained_dialog(tech_gained_id)
   $("#tech_dialog").html(message);
   $("#tech_dialog").attr("title", title);
   $("#tech_dialog").dialog({
-			bgiframe: true,
+			autoOpen: false,
+      bgiframe: true,
 			modal: false,
 			width: is_small_screen() ? "90%" : "60%",
 			buttons: [
@@ -656,7 +657,7 @@ function show_tech_gained_dialog(tech_gained_id)
              ]
 		});
 
-  $("#tech_dialog").dialog('open');
+  // $("#tech_dialog").dialog('open');
   $("#game_text_input").blur();
   $("#tech_advance_helptext").tooltip({ disabled: false });
   $(".specific_tech").tooltip({ disabled: false });

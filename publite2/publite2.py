@@ -26,7 +26,7 @@ import sys
 import time
 import http.client
 import configparser
-from pubstatus import *
+from pubstatus import PubStatus
 from civlauncher import Civlauncher
 import os.path
 import glob
@@ -99,7 +99,7 @@ class metachecker():
                       + " servers (the server limit) but according to the"
                       + " metaserver it has found none.");
 
-              # start LongTurn games, one per pass
+              # Start LongTurn games, one per pass
               lt_scripts = glob.glob('pubscript_longturn_*.serv')
               self.longturn.intersection_update(lt_scripts)
               for script in lt_scripts:
@@ -179,6 +179,16 @@ if __name__ == '__main__':
     mc.server_list.append(new_server);
     new_server.start();
     port += 1;
+  
+  test_settings = configparser.ConfigParser()
+  test_settings.read(settings_file)
+  server_capacity_test = int(test_settings.get("Resource usage", "server_capacity_test", fallback = 5))
+  test_port = int(test_settings.get("Resource usage", "test_port_start_index", fallback = 6600))
+  for _ in range(server_capacity_test):
+    new_server = Civlauncher("multiplayer", "multiplayer", test_port, metahost + ":" + str(metaport) + metapath, mc.savesdir)
+    mc.server_list.append(new_server);
+    new_server.start();
+    test_port += 1;
 
   print("Publite2 started!");
   time.sleep(20);

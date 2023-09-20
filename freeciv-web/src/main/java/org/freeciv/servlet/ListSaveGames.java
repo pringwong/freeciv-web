@@ -39,6 +39,7 @@ public class ListSaveGames extends HttpServlet {
 	private final Validation validation = new Validation();
 	
 	private String savegameDirectory;
+	private String[] saveSuffix = {".sav.bz2",".sav.gz",".sav.xz",".sav.zst", ".sav"};	
 
 	public void init(ServletConfig config) throws ServletException {
 		super.init(config);
@@ -79,7 +80,12 @@ public class ListSaveGames extends HttpServlet {
 
 					for (File file : files) {
 						if (file.isFile()) {
-							buffer.append(file.getName().replaceAll(".sav.xz", ""));
+							for (String suffix : saveSuffix) {
+								if (file.getName().endsWith(suffix)) {
+									buffer.append(file.getName().replaceAll(suffix, ""));
+									break;
+								}
+							}							
 							buffer.append(';');
 						}
 					}
