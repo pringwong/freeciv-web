@@ -319,7 +319,6 @@ function create_diplomacy_dialog(counterpart, template) {
   var diplomacy_dialog = $("#diplomacy_dialog_" + counterpart_id);
   diplomacy_dialog.attr("title", title);
   diplomacy_dialog.dialog({
-      autoOpen: false,
 			bgiframe: true,
 			modal: false,
 			width: is_small_screen() ? "90%" : "50%",
@@ -343,7 +342,7 @@ function create_diplomacy_dialog(counterpart, template) {
              "restore" : "ui-icon-bullet"
            }});
 
-  // diplomacy_dialog.dialog('open');
+  diplomacy_dialog.dialog('open');
 
   var nation = nations[pplayer['nation']];
   if (nation['customized']) {

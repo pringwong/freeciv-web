@@ -17,6 +17,7 @@
 
 ***********************************************************************/
 
+
 var mouse_x;
 var mouse_y;
 var prev_mouse_x;
@@ -25,9 +26,6 @@ var keyboard_input = true;
 var unitpanel_active = false;
 var allow_right_click = false;
 var mapview_mouse_movement = false;
-
-var roads = [];
-var bases = [];
 
 var current_focus = [];
 
@@ -273,12 +271,10 @@ function control_init()
   /* prevents keyboard input from changing tabs. */
   $('#tabs>ul>li').off('keydown');
   $('#tabs>div').off('keydown');
-
-  $('#game_unit_orders_default').css("display", "none")
 }
 
 /****************************************************************************
-  Determined if this is a touch enabled device, such as iPhone, iPad.
+ determined if this is a touch enabled device, such as iPhone, iPad.
 ****************************************************************************/
 function is_touch_device() 
 {
@@ -291,10 +287,10 @@ function is_touch_device()
 }
 
 /****************************************************************************
-  Remove focus from all input elements on touch devices, since the mobile
-  keyboard can be annoying to constantly popup and resize screen etc.
+ Remove focus from all input elements on touch devices, since the mobile
+ keyboard can be annoying to constantly popup and resize screen etc.  
 ****************************************************************************/
-function blur_input_on_touchdevice()
+function blur_input_on_touchdevice() 
 {
   if (is_touch_device() || is_small_screen()) {
     $('input[type=text], textarea').blur();
@@ -302,7 +298,7 @@ function blur_input_on_touchdevice()
 }
 
 /****************************************************************************
-  Called when the mouse is moved.
+ Called when the mouse is moved.
 ****************************************************************************/
 function mouse_moved_cb(e)
 {
@@ -419,8 +415,8 @@ function update_mouse_cursor()
 }
 
 /****************************************************************************
-  Set the chatbox messages context to the next item on the list if it is
-  small. Otherwise, show a dialog for the user to select one.
+ Set the chatbox messages context to the next item on the list if it is
+ small. Otherwise, show a dialog for the user to select one.
 ****************************************************************************/
 function chat_context_change() {
   var recipients = chat_context_get_recipients();
@@ -432,7 +428,7 @@ function chat_context_change() {
 }
 
 /****************************************************************************
-  Get ordered list of possible alive human chatbox messages recipients.
+ Get ordered list of possible alive human chatbox messages recipients.
 ****************************************************************************/
 function chat_context_get_recipients() {
   var allies = false;
@@ -486,7 +482,7 @@ function chat_context_get_recipients() {
 }
 
 /****************************************************************************
-  Switch chatbox messages recipients.
+ Switch chatbox messages recipients.
 ****************************************************************************/
 function chat_context_set_next(recipients) {
   var next = 0;
@@ -502,8 +498,8 @@ function chat_context_set_next(recipients) {
 }
 
 /****************************************************************************
-  Show a dialog for the user to select the default recipient of
-  chatbox messages.
+ Show a dialog for the user to select the default recipient of
+ chatbox messages.
 ****************************************************************************/
 function chat_context_dialog_show(recipients) {
   var dlg = $("#chat_context_dialog");
@@ -583,7 +579,7 @@ function chat_context_dialog_show(recipients) {
 }
 
 /****************************************************************************
-  Handle a choice in the chat context dialog.
+ Handle a choice in the chat context dialog.
 ****************************************************************************/
 function handle_chat_direction_chosen(ev) {
   var new_send_to = $(this).data("chatSendTo");
@@ -596,7 +592,7 @@ function handle_chat_direction_chosen(ev) {
 }
 
 /****************************************************************************
-  Set the context for the chatbox.
+ Set the context for the chatbox.
 ****************************************************************************/
 function set_chat_direction(player_id) {
 
@@ -639,9 +635,9 @@ function set_chat_direction(player_id) {
 }
 
 /****************************************************************************
-  Common replacements and encoding for messages.
-  They are going to be injected as html. " and ' are changed to appease
-  the server message_escape.patch until it is removed.
+ Common replacements and encoding for messages.
+ They are going to be injected as html. " and ' are changed to appease
+ the server message_escape.patch until it is removed.
 ****************************************************************************/
 function encode_message_text(message) {
   message = message.replace(/^\s+|\s+$/g,"");
@@ -654,7 +650,7 @@ function encode_message_text(message) {
 }
 
 /****************************************************************************
-  Tell whether this is a simple message to the choir.
+ Tell whether this is a simple message to the choir.
 ****************************************************************************/
 function is_unprefixed_message(message) {
   if (message === null) return false;
@@ -956,7 +952,7 @@ function control_unit_killed(punit)
 
   if (unit_is_in_focus(punit)) {
     if (current_focus.length == 1) {
-      /* If the unit in focus is removed, then advance the unit focus. */
+      /* if the unit in focus is removed, then advance the unit focus. */
       advance_unit_focus();
     } else {
       current_focus = unit_list_without(current_focus, punit);
@@ -968,10 +964,10 @@ function control_unit_killed(punit)
 }
 
 /**************************************************************************
-  If there is no unit currently in focus, or if the current unit in
-  focus should not be in focus, then get a new focus unit.
-  We let GOTO-ing units stay in focus, so that if they have moves left
-  at the end of the goto, then they are still in focus.
+ If there is no unit currently in focus, or if the current unit in
+ focus should not be in focus, then get a new focus unit.
+ We let GOTO-ing units stay in focus, so that if they have moves left
+ at the end of the goto, then they are still in focus.
 **************************************************************************/
 function update_unit_focus()
 {
@@ -991,16 +987,16 @@ function update_unit_focus()
     }
   }
 
-  /* Iterate zero times for no units in focus,
+  /* iterate zero times for no units in focus,
    * otherwise quit for any of the conditions. */
   var funits = get_units_in_focus();
   for (var i = 0; i < funits.length; i++) {
     var punit = funits[i];
 
     if (punit['movesleft'] > 0
-	&& punit['done_moving'] == false
-        && punit['ssa_controller'] == SSA_NONE
-	&& punit['activity'] == ACTIVITY_IDLE) {
+	  && punit['done_moving'] == false
+      && punit['ssa_controller'] == SSA_NONE
+	  && punit['activity'] == ACTIVITY_IDLE) {
       return;
     }
 
@@ -1010,11 +1006,11 @@ function update_unit_focus()
 }
 
 /**************************************************************************
-  This function may be called from packhand.c, via update_unit_focus(),
-  as a result of packets indicating change in activity for a unit. Also
-  called when user press the "Wait" command.
+ This function may be called from packhand.c, via update_unit_focus(),
+ as a result of packets indicating change in activity for a unit. Also
+ called when user press the "Wait" command.
 
-  FIXME: Add feature to focus only units of a certain category.
+ FIXME: Add feature to focus only units of a certain category.
 **************************************************************************/
 function advance_unit_focus()
 {
@@ -1090,7 +1086,7 @@ function advance_unit_focus()
 }
 
 /**************************************************************************
-  Enables and disables the correct units commands for the unit in focus.
+ Enables and disables the correct units commands for the unit in focus.
 **************************************************************************/
 function update_unit_order_commands()
 {
@@ -1157,36 +1153,23 @@ function update_unit_order_commands()
       if (ptype['name'] == "Engineers") unit_actions["autosettlers"] = {name: "Auto engineers (A)"};
 
       if (!tile_has_extra(ptile, EXTRA_ROAD)) {
+        $("#order_road").show();
         $("#order_railroad").hide();
-        $("#order_maglev").hide();
-        if (!(tile_has_extra(ptile, EXTRA_RIVER)
-                && player_invention_state(client.conn.playing, tech_id_by_name('Bridge Building')) == TECH_UNKNOWN)) {
-	  unit_actions["road"] = {name: "Build road (R)"};
-          $("#order_road").show();
-	} else {
-          $("#order_road").hide();
-        }
-      } else if (!tile_has_extra(ptile, EXTRA_RAIL)
-                 && player_invention_state(client.conn.playing,
-                                           tech_id_by_name('Railroad')) == TECH_KNOWN
-                 && tile_has_extra(ptile, EXTRA_ROAD)) {
+        if (!(tile_has_extra(ptile, EXTRA_RIVER) && player_invention_state(client.conn.playing, tech_id_by_name('Bridge Building')) == TECH_UNKNOWN)) {
+	      unit_actions["road"] = {name: "Build road (R)"};
+	    }
+      } else if (player_invention_state(client.conn.playing, tech_id_by_name('Railroad')) == TECH_KNOWN
+                 && tile_has_extra(ptile, EXTRA_ROAD)
+               && !tile_has_extra(ptile, EXTRA_RAIL)) {
         $("#order_road").hide();
-        $("#order_maglev").hide();
         $("#order_railroad").show();
 	    unit_actions['railroad'] = {name: "Build railroad (R)"};
-      } else if (typeof EXTRA_MAGLEV !== 'undefined'
-                 && !tile_has_extra(ptile, EXTRA_MAGLEV)
-                 && player_invention_state(client.conn.playing,
-                                           tech_id_by_name('Superconductors')) == TECH_KNOWN
-                 && tile_has_extra(ptile, EXTRA_RAIL)) {
-        $("#order_road").hide();
-        $("#order_railroad").hide();
-        $("#order_maglev").show();
-	    unit_actions['maglev'] = {name: "Build maglev (R)"};
       } else {
         $("#order_road").hide();
         $("#order_railroad").hide();
-        $("#order_maglev").hide();
+      }
+      if (tile_has_extra(ptile, EXTRA_RIVER) && player_invention_state(client.conn.playing, tech_id_by_name('Bridge Building')) == TECH_UNKNOWN) {
+        $("#order_road").hide();
       }
 
       $("#order_fortify").hide();
@@ -1371,7 +1354,6 @@ function init_game_unit_panel()
 
   $("#game_unit_panel").attr("title", "Units");
   $("#game_unit_panel").dialog({
-      autoOpen:false,
 			bgiframe: true,
 			modal: false,
 			width: "370px",
@@ -1393,15 +1375,15 @@ function init_game_unit_panel()
                "restore" : "ui-icon-bullet"
              }});
 
-  // $("#game_unit_panel").dialog('open');
+  $("#game_unit_panel").dialog('open');
   $("#game_unit_panel").parent().css("overflow", "hidden");
   if (game_unit_panel_state == "minimized") $("#game_unit_panel").dialogExtend("minimize");
 }
 
 /**************************************************************************
-  Find the nearest available unit for focus, excluding any current unit
-  in focus unless "accept_current" is TRUE. If the current focus unit
-  is the only possible unit, or if there is no possible unit, returns NULL.
+ Find the nearest available unit for focus, excluding any current unit
+ in focus unless "accept_current" is TRUE.  If the current focus unit
+ is the only possible unit, or if there is no possible unit, returns NULL.
 **************************************************************************/
 function find_best_focus_candidate(accept_current)
 {
@@ -1466,12 +1448,13 @@ function unit_distance_compare(unit_a, unit_b)
   }
 }
 
+
 /**************************************************************************
-  Sets the focus unit directly. The unit given will be given the
+  Sets the focus unit directly.  The unit given will be given the
   focus; if NULL the focus will be cleared.
 
-  This function is called for several reasons. Sometimes a fast-focus
-  happens immediately as a result of a client action. Other times it
+  This function is called for several reasons.  Sometimes a fast-focus
+  happens immediately as a result of a client action.  Other times it
   happens because of a server-sent packet that wakes up a unit.
 **************************************************************************/
 function set_unit_focus(punit)
@@ -1489,7 +1472,7 @@ function set_unit_focus(punit)
 }
 
 /**************************************************************************
-  See set_unit_focus()
+ See set_unit_focus()
 **************************************************************************/
 function set_unit_focus_and_redraw(punit)
 {
@@ -1520,7 +1503,7 @@ function set_unit_focus_and_activate(punit)
 }
 
 /**************************************************************************
-  See set_unit_focus_and_redraw()
+ See set_unit_focus_and_redraw()
 **************************************************************************/
 function city_dialog_activate_unit(punit)
 {
@@ -1530,7 +1513,7 @@ function city_dialog_activate_unit(punit)
 }
 
 /**************************************************************************
-  Center on the focus unit, if off-screen and auto_center_on_unit is true.
+Center on the focus unit, if off-screen and auto_center_on_unit is true.
 **************************************************************************/
 function auto_center_on_focus_unit()
 {
@@ -1545,7 +1528,7 @@ function auto_center_on_focus_unit()
 }
 
 /****************************************************************************
-  Finds a single focus unit that we can center on. May return NULL.
+  Finds a single focus unit that we can center on.  May return NULL.
 ****************************************************************************/
 function find_a_focus_unit_tile_to_center_on()
 {
@@ -1557,7 +1540,7 @@ function find_a_focus_unit_tile_to_center_on()
 }
 
 /**************************************************************************
-  Return a pointer to a visible unit, if there is one.
+Return a pointer to a visible unit, if there is one.
 **************************************************************************/
 function find_visible_unit(ptile)
 {
@@ -1599,7 +1582,7 @@ function find_visible_unit(ptile)
 }
 
 /**********************************************************************
-  TODO: not complete yet
+TODO: not complete yet
 ***********************************************************************/
 function get_drawable_unit(ptile, citymode)
 {
@@ -1733,10 +1716,10 @@ function do_map_click(ptile, qtype, first_time_called)
 
   if (goto_active) {
     if (current_focus.length > 0) {
-      // Send goto order for all units in focus.
+      // send goto order for all units in focus. 
       for (var s = 0; s < current_focus.length; s++) {
         punit = current_focus[s];
-        // Get the path the server sent using PACKET_WEB_GOTO_PATH.
+          /* Get the path the server sent using PACKET_WEB_GOTO_PATH. */
         var goto_path = goto_request_map[punit['id'] + "," + ptile['x'] + "," + ptile['y']];
         if (goto_path == null) {
           continue;
@@ -1935,7 +1918,7 @@ function do_map_click(ptile, qtype, first_time_called)
           }
 	    }
       } else if (pcity == null) {
-        // Clicked on a tile with units owned by other players.
+        // clicked on a tile with units owned by other players.
         current_focus = sunits;
         $("#game_unit_orders_default").hide();
         update_active_units_dialog();
@@ -1950,8 +1933,8 @@ function do_map_click(ptile, qtype, first_time_called)
 
 
 /**************************************************************************
-  Returns a possibly active dialog.
-  Helper function to know if the map keyhandler may apply.
+ Returns a possibly active dialog.
+ Helper function to know if the map keyhandler may apply.
 **************************************************************************/
 function find_active_dialog()
 {
@@ -1971,7 +1954,7 @@ function find_active_dialog()
 }
 
 /**************************************************************************
-  Callback to handle keyboard events
+ Callback to handle keyboard events
 **************************************************************************/
 function global_keyboard_listener(ev)
 {
@@ -1995,7 +1978,7 @@ function global_keyboard_listener(ev)
 }
 
 /**************************************************************************
-  Handles global keybindings.
+ Handles global keybindings.
 **************************************************************************/
 function
 civclient_handle_key(keyboard_key, key_code, ctrl, alt, shift, the_event)
@@ -2026,7 +2009,7 @@ civclient_handle_key(keyboard_key, key_code, ctrl, alt, shift, the_event)
 }
 
 /**************************************************************************
-  Handles map keybindings.
+ Handles map keybindings.
 **************************************************************************/
 function
 map_handle_key(keyboard_key, key_code, ctrl, alt, shift, the_event)
@@ -2223,7 +2206,7 @@ map_handle_key(keyboard_key, key_code, ctrl, alt, shift, the_event)
       action_tgt_sel_active = false;
       break;
 
-    case 32: // Space, will clear selection and goto.
+    case 32: // space, will clear selection and goto.
       current_focus = [];
       if (renderer == RENDERER_WEBGL) webgl_clear_unit_focus();
       goto_active = false;
@@ -2301,8 +2284,10 @@ function handle_context_menu_callback(key)
       break;
 
     case "road":
+      key_unit_road();
+      break;
+
     case "railroad":
-    case "maglev":
       key_unit_road();
       break;
 
@@ -2480,10 +2465,11 @@ function deactivate_goto(will_advance_unit_focus)
   // update focus to next unit after 600ms.
   if (will_advance_unit_focus) setTimeout(update_unit_focus, 600);
 
+
 }
 
 /**************************************************************************
-  Ends the current turn.
+ Ends the current turn.
 **************************************************************************/
 function send_end_turn()
 {
@@ -2509,7 +2495,7 @@ function send_end_turn()
 
 
 /**************************************************************************
-  Tell the units in focus to auto explore.
+ Tell the units in focus to auto explore.
 **************************************************************************/
 function key_unit_auto_explore()
 {
@@ -2521,7 +2507,7 @@ function key_unit_auto_explore()
 }
 
 /**************************************************************************
-  Tell the units in focus to load on a transport.
+ Tell the units in focus to load on a transport.
 **************************************************************************/
 function key_unit_load()
 {
@@ -2552,7 +2538,7 @@ function key_unit_load()
 }
 
 /**************************************************************************
-  Unload all units from transport
+ Unload all units from transport
 **************************************************************************/
 function key_unit_unload()
 {
@@ -2583,7 +2569,7 @@ function key_unit_unload()
 }
 
 /**************************************************************************
-  Focus a unit transported by this transport unit
+ Focus a unit transported by this transport unit
 **************************************************************************/
 function key_unit_show_cargo()
 {
@@ -2607,7 +2593,7 @@ function key_unit_show_cargo()
 }
 
 /**************************************************************************
-  Tell the unit to wait (focus to next unit with moves left)
+ Tell the unit to wait (focus to next unit with moves left)
 **************************************************************************/
 function key_unit_wait()
 {
@@ -2620,7 +2606,7 @@ function key_unit_wait()
 }
 
 /**************************************************************************
-  Tell the unit to have no orders this turn, set unit to done moving.
+ Tell the unit to have no orders this turn, set unit to done moving.
 **************************************************************************/
 function key_unit_noorders()
 {
@@ -2634,7 +2620,7 @@ function key_unit_noorders()
 }
 
 /**************************************************************************
-  Tell the units to stop what they are doing.
+ Tell the units to stop what they are doing.
 **************************************************************************/
 function key_unit_idle()
 {
@@ -2647,7 +2633,7 @@ function key_unit_idle()
 }
 
 /**************************************************************************
-  Tell the units in focus to sentry.
+ Tell the units in focus to sentry.
 **************************************************************************/
 function key_unit_sentry()
 {
@@ -2660,7 +2646,7 @@ function key_unit_sentry()
 }
 
 /**************************************************************************
-  Tell the units in focus to fortify.
+ Tell the units in focus to fortify.
 **************************************************************************/
 function key_unit_fortify()
 {
@@ -2673,49 +2659,34 @@ function key_unit_fortify()
 }
 
 /**************************************************************************
-  Tell the units in focus to build base.
+ Tell the units in focus to build base.
 **************************************************************************/
 function key_unit_fortress()
 {
   var funits = get_units_in_focus();
   for (var i = 0; i < funits.length; i++) {
     var punit = funits[i];
-    var ptile = index_to_tile(punit['tile']);
-
-    for (var b = 0; b < bases.length; b++) {
-      if (bases[b]['base']['gui_type'] == BASE_GUI_FORTRESS
-          && !tile_has_extra(ptile, bases[b])) {
-        request_new_unit_activity(punit, ACTIVITY_BASE, bases[b]['id']);
-      }
-    }
+    /* EXTRA_NONE -> server decides */
+    request_new_unit_activity(punit, ACTIVITY_BASE, EXTRA_NONE);
   }
-
   setTimeout(update_unit_focus, 700);
 }
 
 /**************************************************************************
-  Tell the units in focus to build airbase.
+ Tell the units in focus to build airbase.
 **************************************************************************/
 function key_unit_airbase()
 {
   var funits = get_units_in_focus();
   for (var i = 0; i < funits.length; i++) {
     var punit = funits[i];
-    var ptile = index_to_tile(punit['tile']);
-
-    for (var b = 0; b < bases.length; b++) {
-      if (bases[b]['base']['gui_type'] == BASE_GUI_AIRBASE
-          && !tile_has_extra(ptile, bases[b])) {
-        request_new_unit_activity(punit, ACTIVITY_BASE, bases[b]['id']);
-      }
-    }
+    request_new_unit_activity(punit, ACTIVITY_BASE, EXTRA_AIRBASE);
   }
-
   setTimeout(update_unit_focus, 700);
 }
 
 /**************************************************************************
-  Tell the units in focus to irrigate.
+ Tell the units in focus to irrigate.
 **************************************************************************/
 function key_unit_irrigate()
 {
@@ -2768,7 +2739,7 @@ function key_unit_nuke()
 }
 
 /**************************************************************************
-  Tell the units to upgrade.
+ Tell the units to upgrade.
 **************************************************************************/
 function key_unit_upgrade()
 {
@@ -2783,7 +2754,7 @@ function key_unit_upgrade()
 }
 
 /**************************************************************************
-  Tell the units to paradrop.
+ Tell the units to paradrop.
 **************************************************************************/
 function key_unit_paradrop()
 {
@@ -2795,7 +2766,7 @@ function key_unit_paradrop()
 }
 
 /**************************************************************************
-  Tell the units to airlift.
+ Tell the units to airlift.
 **************************************************************************/
 function key_unit_airlift()
 {
@@ -2807,7 +2778,7 @@ function key_unit_airlift()
 }
 
 /**************************************************************************
-  Tell the units to transform the terrain.
+ Tell the units to transform the terrain.
 **************************************************************************/
 function key_unit_transform()
 {
@@ -2841,7 +2812,7 @@ function key_unit_pillage()
 }
 
 /**************************************************************************
-  Tell the units in focus to mine.
+ Tell the units in focus to mine.
 **************************************************************************/
 function key_unit_mine()
 {
@@ -2868,7 +2839,7 @@ function key_unit_plant()
 }
 
 /**************************************************************************
-  Tell the units in focus to build some kind of road.
+ Tell the units in focus to build road or railroad.
 **************************************************************************/
 function key_unit_road()
 {
@@ -2876,19 +2847,17 @@ function key_unit_road()
   for (var i = 0; i < funits.length; i++) {
     var punit = funits[i];
     var ptile = index_to_tile(punit['tile']);
-
-    for (var r = 0; r < roads.length; r++) {
-      if (!tile_has_extra(ptile, roads[r])) {
-        request_new_unit_activity(punit, ACTIVITY_GEN_ROAD, roads[r]['id']);
-      }
+    if (!tile_has_extra(ptile, EXTRA_ROAD)) {
+      request_new_unit_activity(punit, ACTIVITY_GEN_ROAD, extras['Road']['id']);
+    } else if (!tile_has_extra(ptile, EXTRA_RAIL)) {
+      request_new_unit_activity(punit, ACTIVITY_GEN_ROAD, extras['Railroad']['id']);
     }
   }
-
   setTimeout(update_unit_focus, 700);
 }
 
 /**************************************************************************
-  Changes unit homecity to the city on same tile.
+ Changes unit homecity to the city on same tile.
 **************************************************************************/
 function key_unit_homecity()
 {
@@ -3048,9 +3017,10 @@ function request_unit_autosettlers(punit)
   if (punit != null ) {
     request_unit_cancel_orders(punit);
     action_decision_clear_want(punit['id']);
-    request_unit_ssa_set(punit, SSA_AUTOWORKER);
+    request_unit_ssa_set(punit, SSA_AUTOSETTLER);
   }
 }
+
 
 /****************************************************************************
   Request that a city is built.
@@ -3115,7 +3085,7 @@ function request_unit_do_action(action_id, actor_id, target_id, sub_tgt_id,
 }
 
 /**************************************************************************
-  Tell the units in focus to disband.
+ Tell the units in focus to disband.
 **************************************************************************/
 function key_unit_disband()
 {
@@ -3149,7 +3119,7 @@ function(){
 }
 
 /**************************************************************************
-  Moved the unit in focus in the specified direction.
+ Moved the unit in focus in the specified direction.
 **************************************************************************/
 function key_unit_move(dir)
 {
@@ -3366,8 +3336,7 @@ function center_on_any_city()
 }
 
 /**************************************************************************
-  This function shows the dialog containing active units on
-  the current tile.
+ This function shows the dialog containing active units on the current tile.
 **************************************************************************/
 function update_active_units_dialog()
 {
@@ -3382,7 +3351,6 @@ function update_active_units_dialog()
     ptile = index_to_tile(current_focus[0]['tile']);
     punits.push(current_focus[0]);
     var tmpunits = tile_units(ptile);
-
     for (var i = 0; i < tmpunits.length; i++) {
       var kunit = tmpunits[i];
       if (kunit['id'] == current_focus[0]['id']) continue;

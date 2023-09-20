@@ -319,7 +319,6 @@ function show_dialog_message(title, message) {
   $("#generic_dialog").html(message);
   $("#generic_dialog").attr("title", title);
   $("#generic_dialog").dialog({
-      autoOpen: false,
 			bgiframe: true,
 			modal: false,
 			width: is_small_screen() ? "90%" : "50%",
@@ -335,7 +334,7 @@ function show_dialog_message(title, message) {
                      "restore" : "ui-icon-bullet"
                    }});
 
-  // $("#generic_dialog").dialog('open');
+  $("#generic_dialog").dialog('open');
   $("#game_text_input").blur();
 
   // automatically close dialog after 24 seconds, because sometimes the dialog can't be closed manually.

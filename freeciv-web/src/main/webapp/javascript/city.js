@@ -206,7 +206,6 @@ function show_city_dialog(pcity)
   $("#city_dialog").attr("title", decodeURIComponent(pcity['name'])
                          + " (" + pcity['size'] + ")");
   $("#city_dialog").dialog({
-      autoOpen: false,
 			bgiframe: true,
 			modal: false,
 			width: is_small_screen() ? "98%" : "80%",
@@ -223,7 +222,7 @@ function show_city_dialog(pcity)
                      }});
 
   $("#city_dialog").dialog('widget').keydown(city_keyboard_listener);
-  // $("#city_dialog").dialog('open');
+  $("#city_dialog").dialog('open');
   $("#game_text_input").blur();
 
   /* Prepare city dialog for small screens. */
@@ -687,7 +686,7 @@ function request_city_buy()
   $("#dialog").attr("title", "Buy It!");
   $("#dialog").dialog({
 			bgiframe: true,
-			modal: false,
+			modal: true,
 			width: is_small_screen() ? "95%" : "50%",
 			buttons: {
 				"Yes": function() {
@@ -820,9 +819,8 @@ function city_name_dialog(suggested_name, unit_id) {
 
   $("#city_name_dialog").attr("title", "Build New City");
   $("#city_name_dialog").dialog({
-      autoOpen: false,
 			bgiframe: true,
-			modal: false,
+			modal: true,
 			width: "300",
 			close: function() {
 				keyboard_input=true;
@@ -858,8 +856,9 @@ function city_name_dialog(suggested_name, unit_id) {
 		});
 
   $("#city_name_req").attr('maxlength', MAX_LEN_NAME);
-  // alert("helllooooooooo")
-  // $("#city_name_dialog").dialog('open');
+
+  $("#city_name_dialog").dialog('open');
+
   $('#city_name_dialog').keyup(function(e) {
     if (e.keyCode == 13) {
       var name = $("#city_name_req").val();
@@ -1176,7 +1175,7 @@ function rename_city()
   $("#city_name_dialog").attr("title", "Rename City");
   $("#city_name_dialog").dialog({
 			bgiframe: true,
-			modal: false,
+			modal: true,
 			width: "300",
 			close: function() {
 				keyboard_input=true;

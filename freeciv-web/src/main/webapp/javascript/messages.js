@@ -33,7 +33,6 @@ function init_chatbox()
 
   $("#game_chatbox_panel").attr("title", "Messages");
   $("#game_chatbox_panel").dialog({
-      autoOpen: false,
 			bgiframe: true,
 			modal: false,
 			width: "27%",
@@ -55,7 +54,7 @@ function init_chatbox()
                        "maximize" : "ui-icon-circle-plus",
                        "restore" : "ui-icon-bullet"
                      }});
-  // $("#game_chatbox_panel").dialog('open');
+  $("#game_chatbox_panel").dialog('open');
   $(".chatbox_dialog").css("top", "52px");
 
 
