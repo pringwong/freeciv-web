@@ -1,6 +1,6 @@
 read web.serv
 
-cmdlevel ctrl first
+cmdlevel hack
 set topology ""
 set wrap WRAPX
 set nationset all
